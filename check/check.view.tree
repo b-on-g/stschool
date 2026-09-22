@@ -8,25 +8,25 @@ $bog_stschool_check $mol_page
 			dictionary <= task_dictionary *
 			value? <=> task_link? \
 		<= Status $giper_baza_status
-	body /
-		<= Grid $mol_list
-			rows <= grid_rows /
-				<= Head $mol_row
-					sub <= head_cells /
-						<= Head_name $mol_view
-							sub / \Ученик
-						<= Head_item* $mol_paragraph
-							title <= item_text* \
-				<= Student_row* $mol_row
-					sub <= student_cells* /
-				<= Student_name* $mol_view
-					sub /
-						<= student_name* \
-						<= student_sent* \
-				<= Cell* $bog_stschool_cell
-					room_link <= link
-					task_link <= task_link
-					student_link <= cell_student* \
-					item <= cell_item* 0
-		<= Nobody $mol_paragraph
-			title \В группе пока нет учеников
+	body <= body_rows /
+	Grid $mol_list
+		rows <= grid_rows /
+			<= Head $mol_row
+				sub <= head_cells /
+					<= Head_name $mol_view
+						sub / \Ученик
+					<= Head_item* $mol_paragraph
+						title <= item_text* \
+			<= Student_row* $mol_row
+				sub <= student_cells* /
+			<= Student_name* $mol_view
+				sub /
+					<= student_name* \
+					<= student_sent* \
+			<= Cell* $bog_stschool_cell
+				room_link <= link
+				task_link <= task_link
+				student_link <= cell_student* \
+				item <= cell_item* 0
+	Nobody $mol_paragraph
+		title \В группе пока нет учеников

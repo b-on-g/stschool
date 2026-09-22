@@ -11,8 +11,7 @@ namespace $.$$ {
 		}
 
 		invite_uri() {
-			const base = this.$.$mol_state_arg.href_normal().replace( /#.*$/, '' )
-			return base + this.$.$mol_state_arg.make_link({ join: this.link(), group: null, screen: null })
+			return this.$.$mol_state_arg.make_link({ join: this.link(), group: null, screen: null })
 		}
 
 		task_rows() {
@@ -26,8 +25,9 @@ namespace $.$$ {
 
 		task_add() {
 			const room = this.room()
+			const numb = room.task_links().length + 1
 			const task = room.data().Tasks( 'auto' )!.make( null )
-			task.Title( 'auto' )!.val( `Задание ${ room.task_links().length + 1 }` )
+			task.Title( 'auto' )!.val( `Задание ${ numb }` )
 			task.Created( 'auto' )!.val( new $mol_time_moment() )
 			const item = task.Items( 'auto' )!.make( null )
 			item.Text( 'auto' )!.val( '' )
@@ -55,7 +55,7 @@ namespace $.$$ {
 		deck_save( file: File ) {
 			const deck = this.room().data().Decks( 'auto' )!.make( null )
 			deck.Title( 'auto' )!.val( file.name.replace( /\.pdf$/i, '' ) )
-			const store = deck.File( 'auto' )!.ensure([[ null, $giper_baza_rank_read ]])
+			const store = deck.File( 'auto' )!.ensure([[ null, $giper_baza_rank_read ]])!
 			store.blob( file )
 			deck.File( 'auto' )!.remote( store )
 			deck.Slides( 'auto' )

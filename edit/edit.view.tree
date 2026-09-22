@@ -2,7 +2,6 @@ $bog_stschool_edit $mol_expander
 	room_link \
 	task_link \
 	title <= task_title
-	expanded? <=> expanded? false
 	Tools $mol_view
 		sub /
 			<= Current $mol_check_box

@@ -1,6 +1,6 @@
 $bog_stschool_teach $mol_page
 	link \
-	title <= group_title \Группа
+	title <= group_title? \Группа
 	tools /
 		<= Stream_link $mol_link
 			title \Стрим
@@ -18,7 +18,7 @@ $bog_stschool_teach $mol_page
 		<= Title_field $mol_form_field
 			name \Название группы
 			Content <= Title $mol_string
-				value? <=> group_title? \
+				value? <=> group_title? \Группа
 		<= Invite_field $mol_form_field
 			name \Ссылка для учеников
 			Content <= Invite $mol_view

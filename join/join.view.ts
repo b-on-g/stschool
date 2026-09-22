@@ -16,6 +16,7 @@ namespace $.$$ {
 		}
 
 		ready() {
+			if( !this.link() ) return false
 			return !!this.room().teacher_pass() && !!this.name().trim()
 		}
 

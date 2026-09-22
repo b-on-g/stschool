@@ -34,8 +34,11 @@ namespace $.$$ {
 			return this.room().member_links()
 		}
 
+		body_rows() {
+			return [ this.students().length ? this.Grid() : this.Nobody() ]
+		}
+
 		grid_rows() {
-			if( !this.students().length ) return [ this.Nobody() ]
 			return [
 				this.Head(),
 				... this.students().map( student => this.Student_row( student ) ),

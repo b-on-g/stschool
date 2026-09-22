@@ -1,0 +1,19 @@
+$bog_stschool_stream $mol_view
+	link \
+	sub /
+		<= Task $mol_view
+			sub <= task_sub /
+				<= Task_title $mol_paragraph
+					title <= task_title \
+				<= Task_item* $mol_paragraph
+					title <= task_item* \
+		<= Stage $mol_view
+			sub <= stage /
+		<= Tabs $mol_switch
+			value? <=> tab? \board
+			options <= tab_options *
+	Board $bog_stschool_board
+		value? <=> board? \
+	Slides* $bog_stschool_slides
+		room_link <= link
+		deck_link <= deck_link* \

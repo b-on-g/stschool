@@ -1,0 +1,51 @@
+$bog_stschool_board $mol_view
+	value? \
+	sub /
+		<= Tools $mol_view
+			sub /
+				<= Tool $mol_switch
+					value? <=> tool? \pen
+					options *
+						pen \Перо
+						text \Текст
+						eraser \Ластик
+				<= Color $mol_switch
+					value? <=> color? \black
+					options *
+						black \Чёрный
+						red \Красный
+						blue \Синий
+						green \Зелёный
+				<= Clear $mol_button_minor
+					title \Очистить
+					click? <=> clear? null
+		<= Sheet $mol_view
+			attr *
+				^
+				bog_stschool_board_tool <= tool
+			event *
+				pointerdown? <=> down? null
+				pointermove? <=> move? null
+				pointerup? <=> up? null
+				pointercancel? <=> up? null
+				dblclick? <=> text_add? null
+			sub /
+				<= Paper $mol_svg_root
+					view_box null
+					sub <= strokes /
+						<= Stroke* $mol_svg_path
+							geometry <= stroke_geometry* \
+							attr *
+								^
+								stroke <= stroke_color* \
+				<= Texts $mol_view
+					sub <= texts /
+						<= Text* $bog_stschool_board_area
+							value? <=> text_value*? \
+							style *
+								left <= text_x* 0
+								top <= text_y* 0
+$bog_stschool_board_area $mol_string
+	dom_name \textarea
+	hint \Текст
+	submit_with_ctrl true

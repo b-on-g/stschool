@@ -1,0 +1,54 @@
+$bog_stschool_app $mol_view
+	plugins /
+		<= Theme $bog_theme_auto
+			theme_light \$mol_theme_calm_light
+			theme_dark \$mol_theme_calm_dark
+			themes /
+				\$mol_theme_calm_light
+				\$mol_theme_calm_dark
+	sub <= screens /
+	Book $mol_book2
+		pages <= pages /
+	Home $mol_page
+		title \Уроки
+		tools /
+			<= Status $giper_baza_status
+			<= Theme_toggle $bog_theme_toggle
+				theme_auto <= Theme
+		body /
+			<= Name_field $mol_form_field
+				name \Как вас зовут
+				Content <= Name $mol_string
+					hint \Имя и фамилия
+					value? <=> name? \
+			<= Teach_field $mol_form_field
+				name \Веду группы
+				Content <= Teach $mol_view
+					sub /
+						<= Teach_list $mol_list
+							rows <= teach_rows /
+								<= Teach_link* $mol_link
+									title <= group_title* \
+									arg *
+										group <= group_link* \
+						<= Group_add $mol_button_minor
+							title \Новая группа
+							click? <=> group_add? null
+			<= Learn_field $mol_form_field
+				name \Учусь
+				Content <= Learn_list $mol_list
+					rows <= learn_rows /
+						<= Learn_link* $mol_link
+							title <= group_title* \
+							arg *
+								group <= group_link* \
+	Join $bog_stschool_join
+		link <= join_link \
+	Teach_page $bog_stschool_teach
+		link <= group_link_current \
+	Study $bog_stschool_study
+		link <= group_link_current \
+	Stream $bog_stschool_stream
+		link <= group_link_current \
+	Check $bog_stschool_check
+		link <= group_link_current \

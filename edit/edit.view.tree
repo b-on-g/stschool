@@ -1,0 +1,33 @@
+$bog_stschool_edit $mol_expander
+	room_link \
+	task_link \
+	title <= task_title
+	expanded? <=> expanded? false
+	Tools $mol_view
+		sub /
+			<= Current $mol_check_box
+				title \На экране
+				checked? <=> current? false
+			<= Home $mol_check_box
+				title \Домашка
+				checked? <=> home? false
+	content /
+		<= Title_field $mol_form_field
+			name \Название
+			Content <= Title $mol_string
+				value? <=> task_title? \
+		<= Items $mol_list
+			rows <= item_rows /
+				<= Item_row* $mol_view
+					sub /
+						<= Item_numb* $mol_paragraph
+							title <= item_numb* \
+						<= Item_text* $mol_string
+							hint \Предложение
+							value? <=> item_text*? \
+						<= Item_key* $mol_string
+							hint \Ответ
+							value? <=> item_key*? \
+				<= Item_add $mol_button_minor
+					title \Ещё пункт
+					click? <=> item_add? null

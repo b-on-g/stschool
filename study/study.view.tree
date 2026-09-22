@@ -1,0 +1,20 @@
+$bog_stschool_study $mol_page
+	link \
+	title <= group_title \Группа
+	tools /
+		<= Status $giper_baza_status
+	body <= body_rows /
+	Current_head $mol_paragraph
+		title \Сейчас на занятии
+	Current $bog_stschool_answer
+		room_link <= link
+		task_link <= current_link \
+		student_link <= student_link \
+	Nothing $mol_paragraph
+		title \Учитель ещё не открыл задание
+	Home_head $mol_paragraph
+		title \Домашние задания
+	Home_row* $bog_stschool_answer
+		room_link <= link
+		task_link <= home_link* \
+		student_link <= student_link

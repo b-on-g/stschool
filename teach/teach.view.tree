@@ -1,0 +1,65 @@
+$bog_stschool_teach $mol_page
+	link \
+	title <= group_title \Группа
+	tools /
+		<= Stream_link $mol_link
+			title \Стрим
+			target \_blank
+			arg *
+				group <= link
+				screen \stream
+		<= Check_link $mol_link
+			title \Проверка
+			target \_blank
+			arg *
+				group <= link
+				screen \check
+	body /
+		<= Title_field $mol_form_field
+			name \Название группы
+			Content <= Title $mol_string
+				value? <=> group_title? \
+		<= Invite_field $mol_form_field
+			name \Ссылка для учеников
+			Content <= Invite $mol_view
+				sub /
+					<= Invite_uri $mol_string
+						enabled false
+						value <= invite_uri \
+					<= Invite_copy $mol_button_copy
+						title \Скопировать
+						text <= invite_uri
+		<= Tasks_field $mol_form_field
+			name \Задания
+			Content <= Tasks $mol_list
+				rows <= task_rows /
+					<= Task_row* $bog_stschool_edit
+						room_link <= link
+						task_link <= task_link* \
+					<= Task_add $mol_button_minor
+						title \Новое задание
+						click? <=> task_add? null
+		<= Decks_field $mol_form_field
+			name \Презентации
+			Content <= Decks $mol_list
+				rows <= deck_rows /
+					<= Deck_row* $mol_view
+						sub /
+							<= Deck_title* $mol_string
+								value? <=> deck_title*? \
+							<= Deck_drop* $mol_button_minor
+								title \Убрать
+								click? <=> deck_drop*? null
+					<= Deck_add $mol_button_open
+						accept \application/pdf
+						multiple false
+						sub /
+							\Загрузить PDF
+							<= Native
+						files? <=> deck_files? /File
+		<= Members_field $mol_form_field
+			name <= members_name \Ученики
+			Content <= Members $mol_list
+				rows <= member_rows /
+					<= Member_row* $mol_paragraph
+						title <= member_name* \

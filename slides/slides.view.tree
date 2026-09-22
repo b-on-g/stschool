@@ -1,0 +1,32 @@
+$bog_stschool_slides $mol_view
+	room_link \
+	deck_link \
+	plugins /
+		<= Keys $mol_hotkey2
+			action <= keys_action *
+	sub /
+		<= Stage $mol_view
+			sub <= stage /
+		<= Bar $mol_view
+			sub /
+				<= Prev $mol_button_minor
+					title \←
+					click? <=> prev? null
+				<= Numb $mol_paragraph
+					title <= numb \
+				<= Next $mol_button_minor
+					title \→
+					click? <=> next? null
+				<= Insert $mol_button_minor
+					title \Вставить слайд после
+					click? <=> insert? null
+				<= Remove $mol_button_minor
+					title \Убрать слайд
+					click? <=> remove? null
+	Page $mol_image
+		uri <= page_uri \
+		loading \eager
+	Slide $bog_stschool_board
+		value? <=> slide_board? \
+	Wait $mol_paragraph
+		title \Загружаем PDF…

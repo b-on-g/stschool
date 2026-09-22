@@ -1,0 +1,29 @@
+$bog_stschool_cell $mol_view
+	room_link \
+	task_link \
+	student_link \
+	item 0
+	attr *
+		^
+		bog_stschool_cell_mark <= mark \
+	sub <= cell_sub /
+	Text $mol_paragraph
+		title <= text \
+	Empty $mol_paragraph
+		title \—
+	Marks $mol_view
+		sub /
+			<= Ok $mol_check_box
+				title \верно
+				checked? <=> ok? false
+			<= Bad $mol_check_box
+				title \неверно
+				checked? <=> bad? false
+	History $mol_expander
+		title <= history_title \
+		content <= history /
+	History_row* $mol_view
+		attr *
+			bog_stschool_cell_mark <= history_mark* \
+		sub /
+			<= history_text* \

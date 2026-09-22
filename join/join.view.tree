@@ -1,0 +1,15 @@
+$bog_stschool_join $mol_page
+	link \
+	title <= group_title \Группа
+	body /
+		<= Hint $mol_paragraph
+			title <= hint \Загружаем группу…
+		<= Name_field $mol_form_field
+			name \Как вас зовут
+			Content <= Name $mol_string
+				hint \Имя и фамилия
+				value? <=> name? \
+		<= Enter $mol_button_major
+			title \Войти в группу
+			enabled <= ready false
+			click? <=> enter? null

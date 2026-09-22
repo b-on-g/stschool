@@ -1,0 +1,35 @@
+$bog_stschool_answer $mol_list
+	room_link \
+	task_link \
+	student_link \
+	rows <= answer_rows /
+	Title $mol_paragraph
+		title <= task_title \
+	Item_row* $mol_view
+		sub <= item_sub* /
+	Item_text* $mol_paragraph
+		title <= item_text* \
+	Item_last* $mol_view
+		attr *
+			bog_stschool_answer_mark <= item_mark* \
+		sub /
+			<= item_last* \
+	Item_key* $mol_paragraph
+		title <= item_key* \
+	Item_input* $mol_string
+		hint \Ваш ответ, Enter чтобы отправить
+		value? <=> item_draft*? \
+		submit? <=> item_send*? null
+	Item_history* $mol_expander
+		title \История
+		content <= item_history* /
+	History_row* $mol_view
+		attr *
+			bog_stschool_answer_mark <= history_mark* \
+		sub /
+			<= history_text* \
+	Send $mol_button_major
+		title \Сдать домашку
+		click? <=> send? null
+	Sent $mol_paragraph
+		title <= sent_text \

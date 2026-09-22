@@ -28,10 +28,6 @@ namespace $ {
 			width: '100%',
 			height: '100%',
 		},
-		Stroke: {
-			fill: 'none',
-			stroke: { width: '3px', linecap: 'round', linejoin: 'round' },
-		},
 		Texts: {
 			position: 'absolute',
 			inset: '0',

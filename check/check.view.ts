@@ -40,7 +40,7 @@ namespace $.$$ {
 
 		grid_rows() {
 			return [
-				this.Head(),
+				this.Grid_head(),
 				... this.students().map( student => this.Student_row( student ) ),
 			]
 		}

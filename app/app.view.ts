@@ -2,6 +2,10 @@ namespace $.$$ {
 
 	export class $bog_stschool_app extends $.$bog_stschool_app {
 
+		static {
+			$giper_baza_yard.masters_default.length = 0
+		}
+
 		auto() {
 			this.home()
 		}

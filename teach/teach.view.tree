@@ -17,7 +17,7 @@ $bog_stschool_teach $mol_page
 	body /
 		<= Title_field $mol_form_field
 			name \Название группы
-			Content <= Title $mol_string
+			Content <= Name $mol_string
 				value? <=> group_title? \Группа
 		<= Invite_field $mol_form_field
 			name \Ссылка для учеников
@@ -50,12 +50,7 @@ $bog_stschool_teach $mol_page
 							<= Deck_drop* $mol_button_minor
 								title \Убрать
 								click? <=> deck_drop*? null
-					<= Deck_add $mol_button_open
-						accept \application/pdf
-						multiple false
-						sub /
-							\Загрузить PDF
-							<= Native
+					<= Deck_add $bog_stschool_teach_upload
 						files? <=> deck_files? /File
 		<= Members_field $mol_form_field
 			name <= members_name \Ученики
@@ -63,3 +58,11 @@ $bog_stschool_teach $mol_page
 				rows <= member_rows /
 					<= Member_row* $mol_paragraph
 						title <= member_name* \
+$bog_stschool_teach_upload $mol_button_open
+	accept \application/pdf
+	multiple false
+	sub /
+		<= Icon
+		<= Label $mol_view
+			sub / \Загрузить PDF
+		<= Native

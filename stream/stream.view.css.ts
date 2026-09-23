@@ -14,12 +14,12 @@ namespace $ {
 			font: { weight: 'bold' },
 		},
 		Stage: {
-			flex: { grow: 1, shrink: 1 },
+			flex: { grow: 1, shrink: 1, direction: 'column' },
 			minHeight: 0,
 			overflow: 'hidden',
 		},
 		Tabs: {
-			flex: { shrink: 0, wrap: 'wrap' },
+			flex: { grow: 0, shrink: 0, wrap: 'wrap' },
 			padding: $mol_gap.block,
 			background: { color: $mol_theme.card },
 		},

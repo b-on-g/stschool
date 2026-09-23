@@ -15,7 +15,7 @@ namespace $.$$ {
 		}
 
 		task_rows() {
-			return this.room().task_links().slice().reverse().map( link => this.Task_row( link ) )
+			return [ ... this.room().task_links().slice().reverse().map( link => this.Task_row( link ) ), this.Task_add() ]
 		}
 
 		@ $mol_mem_key
@@ -31,11 +31,10 @@ namespace $.$$ {
 			task.Created( 'auto' )!.val( new $mol_time_moment() )
 			const item = task.Items( 'auto' )!.make( null )
 			item.Text( 'auto' )!.val( '' )
-			room.current_link( task.link().str )
 		}
 
 		deck_rows() {
-			return this.room().decks().map( deck => this.Deck_row( deck.link().str ) )
+			return [ ... this.room().decks().map( deck => this.Deck_row( deck.link().str ) ), this.Deck_add() ]
 		}
 
 		deck_title( link: string, next?: string ) {

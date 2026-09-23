@@ -1,7 +1,7 @@
 namespace $ {
 
 	$mol_style_define( $bog_stschool_check, {
-		Head: {
+		Grid_head: {
 			align: { items: 'flex-end' },
 			font: { weight: 'bold' },
 		},

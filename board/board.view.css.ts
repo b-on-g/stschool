@@ -41,6 +41,8 @@ namespace $ {
 			font: { size: '1.5rem' },
 			color: '#1a1a1a',
 			background: { color: 'transparent' },
+			border: { color: 'transparent' },
+			boxShadow: 'none',
 			resize: 'both',
 			overflow: 'hidden',
 			whiteSpace: 'pre-wrap',

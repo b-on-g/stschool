@@ -17,11 +17,11 @@ namespace $.$$ {
 
 		ready() {
 			if( !this.link() ) return false
-			return !!this.room().teacher_pass() && !!this.name().trim()
+			return !!this.room().teacher_pass() && !!this.room().roster()?.Members() && !!this.name().trim()
 		}
 
 		hint() {
-			if( !this.room().teacher_pass() ) return 'Загружаем группу…'
+			if( !this.room().teacher_pass() || !this.room().roster()?.Members() ) return 'Загружаем группу…'
 			return `Вы входите в группу «${ this.group_title() }». Учитель увидит ваши ответы, остальные ученики нет.`
 		}
 
@@ -43,7 +43,7 @@ namespace $.$$ {
 			student.Name( 'auto' )!.val( name )
 			student.Group( 'auto' )!.val( link )
 			student.Replies( 'auto' )
-			const member = room.roster()!.Members( 'auto' )!.make( null )
+			const member = room.roster()!.Members()!.make( null )
 			member.Name( 'auto' )!.val( name )
 			member.Land( 'auto' )!.val( land.link().str )
 			$bog_stschool_room.home().Learn( 'auto' )!.key( link, 'auto' ).val( land.link().str )

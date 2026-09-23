@@ -31640,10 +31640,10 @@ var $;
             ready() {
                 if (!this.link())
                     return false;
-                return !!this.room().teacher_pass() && !!this.name().trim();
+                return !!this.room().teacher_pass() && !!this.room().roster()?.Members() && !!this.name().trim();
             }
             hint() {
-                if (!this.room().teacher_pass())
+                if (!this.room().teacher_pass() || !this.room().roster()?.Members())
                     return 'Загружаем группу…';
                 return `Вы входите в группу «${this.group_title()}». Учитель увидит ваши ответы, остальные ученики нет.`;
             }
@@ -31663,7 +31663,7 @@ var $;
                 student.Name('auto').val(name);
                 student.Group('auto').val(link);
                 student.Replies('auto');
-                const member = room.roster().Members('auto').make(null);
+                const member = room.roster().Members().make(null);
                 member.Name('auto').val(name);
                 member.Land('auto').val(land.link().str);
                 $bog_stschool_room.home().Learn('auto').key(link, 'auto').val(land.link().str);
@@ -31881,7 +31881,7 @@ var $;
 			(obj.arg) = () => ({"group": (this.link()), "screen": "check"});
 			return obj;
 		}
-		Title(){
+		Name(){
 			const obj = new this.$.$mol_string();
 			(obj.value) = (next) => ((this.group_title(next)));
 			return obj;
@@ -31889,7 +31889,7 @@ var $;
 		Title_field(){
 			const obj = new this.$.$mol_form_field();
 			(obj.name) = () => ("Название группы");
-			(obj.Content) = () => ((this.Title()));
+			(obj.Content) = () => ((this.Name()));
 			return obj;
 		}
 		invite_uri(){
@@ -31980,10 +31980,7 @@ var $;
 			return [];
 		}
 		Deck_add(){
-			const obj = new this.$.$mol_button_open();
-			(obj.accept) = () => ("application/pdf");
-			(obj.multiple) = () => (false);
-			(obj.sub) = () => (["Загрузить PDF", (this.Native())]);
+			const obj = new this.$.$bog_stschool_teach_upload();
 			(obj.files) = (next) => ((this.deck_files(next)));
 			return obj;
 		}
@@ -32048,7 +32045,7 @@ var $;
 	($mol_mem(($.$bog_stschool_teach.prototype), "group_title"));
 	($mol_mem(($.$bog_stschool_teach.prototype), "Stream_link"));
 	($mol_mem(($.$bog_stschool_teach.prototype), "Check_link"));
-	($mol_mem(($.$bog_stschool_teach.prototype), "Title"));
+	($mol_mem(($.$bog_stschool_teach.prototype), "Name"));
 	($mol_mem(($.$bog_stschool_teach.prototype), "Title_field"));
 	($mol_mem(($.$bog_stschool_teach.prototype), "Invite_uri"));
 	($mol_mem(($.$bog_stschool_teach.prototype), "Invite_copy"));
@@ -32071,6 +32068,27 @@ var $;
 	($mol_mem_key(($.$bog_stschool_teach.prototype), "Member_row"));
 	($mol_mem(($.$bog_stschool_teach.prototype), "Members"));
 	($mol_mem(($.$bog_stschool_teach.prototype), "Members_field"));
+	($.$bog_stschool_teach_upload) = class $bog_stschool_teach_upload extends ($.$mol_button_open) {
+		Label(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => (["Загрузить PDF"]);
+			return obj;
+		}
+		accept(){
+			return "application/pdf";
+		}
+		multiple(){
+			return false;
+		}
+		sub(){
+			return [
+				(this.Icon()), 
+				(this.Label()), 
+				(this.Native())
+			];
+		}
+	};
+	($mol_mem(($.$bog_stschool_teach_upload.prototype), "Label"));
 
 
 ;
@@ -32094,7 +32112,7 @@ var $;
                 return this.$.$mol_state_arg.make_link({ join: this.link(), group: null, screen: null });
             }
             task_rows() {
-                return this.room().task_links().slice().reverse().map(link => this.Task_row(link));
+                return [...this.room().task_links().slice().reverse().map(link => this.Task_row(link)), this.Task_add()];
             }
             task_link(link) {
                 return link;
@@ -32107,10 +32125,9 @@ var $;
                 task.Created('auto').val(new $mol_time_moment());
                 const item = task.Items('auto').make(null);
                 item.Text('auto').val('');
-                room.current_link(task.link().str);
             }
             deck_rows() {
-                return this.room().decks().map(deck => this.Deck_row(deck.link().str));
+                return [...this.room().decks().map(deck => this.Deck_row(deck.link().str)), this.Deck_add()];
             }
             deck_title(link, next) {
                 return this.room().deck(link)?.Title(next === undefined ? undefined : 'auto')?.val(next) ?? '';
@@ -32150,6 +32167,20 @@ var $;
         ], $bog_stschool_teach.prototype, "member_name", null);
         $$.$bog_stschool_teach = $bog_stschool_teach;
     })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_stschool_teach, {
+        Member_row: {
+            padding: $mol_gap.block,
+        },
+        Deck_row: {
+            align: { items: 'center' },
+        },
+    });
 })($ || ($ = {}));
 
 ;
@@ -33100,6 +33131,8 @@ var $;
             font: { size: '1.5rem' },
             color: '#1a1a1a',
             background: { color: 'transparent' },
+            border: { color: 'transparent' },
+            boxShadow: 'none',
             resize: 'both',
             overflow: 'hidden',
             whiteSpace: 'pre-wrap',
@@ -33571,16 +33604,21 @@ var $;
 var $;
 (function ($) {
     $mol_style_define($bog_stschool_slides, {
-        flex: { direction: 'column', grow: 1 },
+        flex: { direction: 'column', grow: 1, shrink: 1, basis: '0px' },
         minHeight: 0,
+        minWidth: 0,
         Stage: {
-            flex: { grow: 1 },
+            flex: { grow: 1, shrink: 1, basis: '0px' },
             minHeight: 0,
+            minWidth: 0,
             justify: { content: 'center' },
             align: { items: 'center' },
             overflow: 'hidden',
         },
         Page: {
+            flex: { shrink: 1 },
+            minHeight: 0,
+            minWidth: 0,
             maxWidth: '100%',
             maxHeight: '100%',
             objectFit: 'contain',
@@ -33765,12 +33803,12 @@ var $;
             font: { weight: 'bold' },
         },
         Stage: {
-            flex: { grow: 1, shrink: 1 },
+            flex: { grow: 1, shrink: 1, direction: 'column' },
             minHeight: 0,
             overflow: 'hidden',
         },
         Tabs: {
-            flex: { shrink: 0, wrap: 'wrap' },
+            flex: { grow: 0, shrink: 0, wrap: 'wrap' },
             padding: $mol_gap.block,
             background: { color: $mol_theme.card },
         },
@@ -34042,7 +34080,7 @@ var $;
 		head_cells(){
 			return [(this.Head_name()), (this.Head_item(id))];
 		}
-		Head(){
+		Grid_head(){
 			const obj = new this.$.$mol_row();
 			(obj.sub) = () => ((this.head_cells()));
 			return obj;
@@ -34082,7 +34120,7 @@ var $;
 		}
 		grid_rows(){
 			return [
-				(this.Head()), 
+				(this.Grid_head()), 
 				(this.Student_row(id)), 
 				(this.Student_name(id)), 
 				(this.Cell(id))
@@ -34116,7 +34154,7 @@ var $;
 	($mol_mem(($.$bog_stschool_check.prototype), "Status"));
 	($mol_mem(($.$bog_stschool_check.prototype), "Head_name"));
 	($mol_mem_key(($.$bog_stschool_check.prototype), "Head_item"));
-	($mol_mem(($.$bog_stschool_check.prototype), "Head"));
+	($mol_mem(($.$bog_stschool_check.prototype), "Grid_head"));
 	($mol_mem_key(($.$bog_stschool_check.prototype), "Student_row"));
 	($mol_mem_key(($.$bog_stschool_check.prototype), "Student_name"));
 	($mol_mem_key(($.$bog_stschool_check.prototype), "Cell"));
@@ -34164,7 +34202,7 @@ var $;
             }
             grid_rows() {
                 return [
-                    this.Head(),
+                    this.Grid_head(),
                     ...this.students().map(student => this.Student_row(student)),
                 ];
             }
@@ -34230,7 +34268,7 @@ var $;
 var $;
 (function ($) {
     $mol_style_define($bog_stschool_check, {
-        Head: {
+        Grid_head: {
             align: { items: 'flex-end' },
             font: { weight: 'bold' },
         },
@@ -34678,6 +34716,9 @@ var $;
     var $$;
     (function ($$) {
         class $bog_stschool_app extends $.$bog_stschool_app {
+            static {
+                $giper_baza_yard.masters_default.length = 0;
+            }
             auto() {
                 this.home();
             }
@@ -34767,6 +34808,14 @@ var $;
     $mol_style_define($bog_stschool_app, {
         Home: {
             flex: { basis: '24rem' },
+        },
+        Stream: {
+            flex: { grow: 1, shrink: 1, basis: '0px' },
+            minWidth: 0,
+        },
+        Check: {
+            flex: { grow: 1, shrink: 1, basis: '0px' },
+            minWidth: 0,
         },
     });
 })($ || ($ = {}));

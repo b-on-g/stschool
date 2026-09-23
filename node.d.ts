@@ -47657,7 +47657,7 @@ declare namespace $ {
 		ReturnType< $mol_form_field['name'] >
 	>
 	type $mol_form_field__Content_bog_stschool_teach_9 = $mol_type_enforce<
-		ReturnType< $bog_stschool_teach['Title'] >
+		ReturnType< $bog_stschool_teach['Name'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
@@ -47751,57 +47751,42 @@ declare namespace $ {
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_button_open__accept_bog_stschool_teach_28 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_button_open['accept'] >
-	>
-	type $mol_button_open__multiple_bog_stschool_teach_29 = $mol_type_enforce<
-		boolean
-		,
-		ReturnType< $mol_button_open['multiple'] >
-	>
-	type $mol_button_open__sub_bog_stschool_teach_30 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_button_open['sub'] >
-	>
-	type $mol_button_open__files_bog_stschool_teach_31 = $mol_type_enforce<
+	type $bog_stschool_teach_upload__files_bog_stschool_teach_28 = $mol_type_enforce<
 		ReturnType< $bog_stschool_teach['deck_files'] >
 		,
-		ReturnType< $mol_button_open['files'] >
+		ReturnType< $bog_stschool_teach_upload['files'] >
 	>
-	type $mol_list__rows_bog_stschool_teach_32 = $mol_type_enforce<
+	type $mol_list__rows_bog_stschool_teach_29 = $mol_type_enforce<
 		ReturnType< $bog_stschool_teach['deck_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_form_field__name_bog_stschool_teach_33 = $mol_type_enforce<
+	type $mol_form_field__name_bog_stschool_teach_30 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__Content_bog_stschool_teach_34 = $mol_type_enforce<
+	type $mol_form_field__Content_bog_stschool_teach_31 = $mol_type_enforce<
 		ReturnType< $bog_stschool_teach['Decks'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
 	>
-	type $mol_paragraph__title_bog_stschool_teach_35 = $mol_type_enforce<
+	type $mol_paragraph__title_bog_stschool_teach_32 = $mol_type_enforce<
 		ReturnType< $bog_stschool_teach['member_name'] >
 		,
 		ReturnType< $mol_paragraph['title'] >
 	>
-	type $mol_list__rows_bog_stschool_teach_36 = $mol_type_enforce<
+	type $mol_list__rows_bog_stschool_teach_33 = $mol_type_enforce<
 		ReturnType< $bog_stschool_teach['member_rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_form_field__name_bog_stschool_teach_37 = $mol_type_enforce<
+	type $mol_form_field__name_bog_stschool_teach_34 = $mol_type_enforce<
 		ReturnType< $bog_stschool_teach['members_name'] >
 		,
 		ReturnType< $mol_form_field['name'] >
 	>
-	type $mol_form_field__Content_bog_stschool_teach_38 = $mol_type_enforce<
+	type $mol_form_field__Content_bog_stschool_teach_35 = $mol_type_enforce<
 		ReturnType< $bog_stschool_teach['Members'] >
 		,
 		ReturnType< $mol_form_field['Content'] >
@@ -47810,7 +47795,7 @@ declare namespace $ {
 		group_title( next?: string ): string
 		Stream_link( ): $mol_link
 		Check_link( ): $mol_link
-		Title( ): $mol_string
+		Name( ): $mol_string
 		Title_field( ): $mol_form_field
 		invite_uri( ): string
 		Invite_uri( ): $mol_string
@@ -47830,7 +47815,7 @@ declare namespace $ {
 		Deck_drop( id: any): $mol_button_minor
 		Deck_row( id: any): $mol_view
 		deck_files( next?: readonly(File)[] ): readonly(File)[]
-		Deck_add( ): $mol_button_open
+		Deck_add( ): $bog_stschool_teach_upload
 		deck_rows( ): readonly(any)[]
 		Decks( ): $mol_list
 		Decks_field( ): $mol_form_field
@@ -47846,6 +47831,18 @@ declare namespace $ {
 		body( ): readonly(any)[]
 	}
 	
+	type $mol_view__sub_bog_stschool_teach_upload_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	export class $bog_stschool_teach_upload extends $mol_button_open {
+		Label( ): $mol_view
+		accept( ): string
+		multiple( ): boolean
+		sub( ): readonly(any)[]
+	}
+	
 }
 
 //# sourceMappingURL=teach.view.tree.d.ts.map
@@ -47854,10 +47851,10 @@ declare namespace $.$$ {
         room(): $bog_stschool_room;
         group_title(next?: string): string;
         invite_uri(): string;
-        task_rows(): $.$bog_stschool_edit[];
+        task_rows(): ($mol_button_minor | $.$bog_stschool_edit)[];
         task_link(link: string): string;
         task_add(): void;
-        deck_rows(): $mol_view[];
+        deck_rows(): ($mol_view | $bog_stschool_teach_upload)[];
         deck_title(link: string, next?: string): string;
         deck_drop(link: string): void;
         deck_files(next?: readonly File[]): never[];
@@ -47866,6 +47863,9 @@ declare namespace $.$$ {
         members_name(): string;
         member_name(link: string): string;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -48902,7 +48902,7 @@ declare namespace $ {
 		item_text( id: any): string
 		Head_item( id: any): $mol_paragraph
 		head_cells( ): readonly(any)[]
-		Head( ): $mol_row
+		Grid_head( ): $mol_row
 		student_cells( id: any): readonly(any)[]
 		Student_row( id: any): $mol_row
 		student_name( id: any): string

@@ -14,6 +14,11 @@ namespace $.$$ {
 			return $bog_stschool_room.home()
 		}
 
+		skin_lights() {
+			const theme = this.Theme()
+			return theme.mode() === 'system' ? 'system' : theme.is_light_now() ? 'light' : 'dark'
+		}
+
 		name( next?: string ) {
 			return this.home().Name( next === undefined ? undefined : 'auto' )?.val( next ) ?? ''
 		}

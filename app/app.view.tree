@@ -6,6 +6,14 @@ $bog_stschool_app $mol_view
 			themes /
 				\$mol_theme_calm_light
 				\$mol_theme_calm_dark
+		<= Skin $bog_builderui_skin
+			lights <= skin_lights
+			base \slate
+			accent \sky
+			chart \blue
+			radius \medium
+			font_body \inter
+			font_head \manrope
 	sub <= screens /
 	Book $mol_book2
 		pages <= pages /
